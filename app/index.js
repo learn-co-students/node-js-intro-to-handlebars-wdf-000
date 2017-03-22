@@ -124,6 +124,34 @@ app.post('/user', (req, res) => {
     });
 });
 
+// app.post('/user', (req, res) => {
+//   const { body } = req;
+//
+//   if (!body.username || !body.password || !body['confirm-password']) {
+//     req.flash('error', 'All fields are required!');
+//     return res.redirect('/signup');
+//   }
+//
+//   if (body.password !== body['confirm-password']) {
+//     req.flash('error', 'Password did not match confirmation!');
+//     return res.redirect('/signup');
+//   }
+//
+//   delete body['confirm-password'];
+//
+//   User
+//     .forge(req.body)
+//     .save()
+//     .then((usr) => {
+//       res.send({id: usr.id});
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//       req.flash('error', error.message);
+//       return res.sendStatus(500);
+//     });
+// });
+
 app.get('/posts', isAuthenticated, (req, res) => {
   Post
     .collection()
@@ -242,6 +270,10 @@ app.get('/', isAuthenticated, (req, res) => {
 
 app.get('/login', (req, res) => {
   res.render('login', { message: req.flash('error') });
+});
+
+app.get('/signup', (req, res) => {
+  res.render('signup', { message: req.flash('error') });
 });
 
 app.post('/login', passport.authenticate('local', {
